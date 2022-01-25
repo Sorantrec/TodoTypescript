@@ -1,4 +1,6 @@
+import { Ref } from "react";
 export interface INewTaskInput {
+  inputRef: React.Ref<HTMLInputElement>,
   inputValue: string,
   type: string,
   name: string,

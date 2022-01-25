@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { ITodoItem } from './interfaces/ITodo';
 import { changeStatusTodoItem, removeTodoItem, saveTodoItemTxt } from '../../../actions/todoActions';
 import { useDispatch } from 'react-redux';
-import NewTaskInput from '../TodoCreationForm/NewTaskInput/NewTaskInput';import Button from '../../Button/Button';
-
+import NewTaskInput from '../TodoCreationForm/NewTaskInput/NewTaskInput';
+import Button from '../../UI/Button/Button';
 
 const Todo = ({id, title, status}: ITodoItem) => {
   const [inputEditStatus, setInputEditStatus] = useState<boolean>(false);
@@ -25,11 +25,12 @@ const Todo = ({id, title, status}: ITodoItem) => {
   }
   const removeItem = () => dispatch(removeTodoItem(id));
   const idAttr = String(id);
+  const inputRef = useRef<HTMLInputElement>(null);
   
   return (
     <div id={idAttr}>
       { inputEditStatus ? 
-        <NewTaskInput type='text' name={`input-edit-${id}`} inputValue={inputValue} setInputValue={changeItemTxt} onKeydownFunc={checkKeyDown} />
+        <NewTaskInput inputRef={inputRef} type='text' name={`input-edit-${id}`} inputValue={inputValue} setInputValue={changeItemTxt} onKeydownFunc={checkKeyDown} />
         : 
         <p onClick={() => changeItemStatus()}>{title}</p> }
       <p style={{color: status ? 'green': '#000'}}>{status ? 'Completed': 'Not completed'}</p>
